@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+    	*{padding: 0;margin: 0;}
+    	html{
+    		font-size: 62.5%
+    	}
+    </style>
+    <script type="text/javascript">
+        function Choose(){
+            var mine = this;
+            this.selections =[];
+            this.init = function(rows,cloumns,where){
+                var ul = document.createElement("ul");
+                ul.style.width="100%";
+                ul.style.border="1px solid #ccc";
+                ul.style.padding="1%"
+                var siteNum=1;
+                for(var i =0;i<cloumns;i++){
+                    for(var j=0;j<rows;j++){
+                        var li = document.createElement("li");
+                        li.style.listStyle = "none";
+                        li.style.width = "3.33%";
+                        li.style.height = "2rem";
+                        li.style.border ="1px solid #000";
+                        li.style.color ="#000";
+                        li.style.background ="green";
+                        li.style.fontSize ="1rem";
+                        li.style.lineHeight ="2rem";
+                        li.style.textAlign ="center";
+                        li.style.cursor ="pointer";
+                        li.style.marginLeft = (j*2 +1) +"rem";
+                        if(j>0){
+                            li.style.marginTop =  -2.2 +"rem";
+                        }else{
+                            li.style.marginTop =  0 +"px";
+                        }
+                        li.textContent = siteNum++;
+                        ul.appendChild(li);
+                    }
+                }
+                ul.onclick = function(e){
+                    var target = e.target || e.srcElement;
+                    if(target.tagName.toUpperCase() ==='LI'){
+                        if('white'===target.style.color){
+                            target.style.background ="green";
+                            target.style.color= "#000";
+                           for(var i=0;i< (mine.selections.length);i++){
+                               if(mine.selections[i] === target.textContent){
+                                   mine.selections.splice(i,1);
+                               }
+                           }
+ 
+                        }else{
+                            target.style.background = "#f00";
+                            target.style.color ='white';
+                            mine.selections.push(target.textContent);
+                        }
+ 
+                    }
+                };
+                var toWhere = where || document.body;
+                toWhere.appendChild(ul);
+            }
+        }
+        window.onload = function(){
+            var chooser = new Choose();
+            chooser.init(30,30);
+           document.getElementById("submit").onclick = function(){
+              var adress= chooser.selections;
+              var charge= adress.length*35;
+              console.log(charge)
+           }
+        }
+    </script>
+</head>
+<body>
+<button id="submit">提交</button>
+
+</body>
+</html>
